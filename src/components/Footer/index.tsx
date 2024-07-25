@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
 
   const defaultMessage = formatMessage({
     id: 'app.copyright.produced',
-    defaultMessage: 'Ant Design Pro',
+    //defaultMessage: 'Ant Design Pro',
   });
 
   const currentYear = new Date().getFullYear();

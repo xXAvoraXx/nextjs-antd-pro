@@ -1,8 +1,8 @@
 import { ProLayoutProps } from '@ant-design/pro-components';
-import { Config } from 'next-i18n-router/dist/types';
+import { IntlConfig } from 'react-intl';
 
 export type ConfigType = {
-  i18n: Config;
+  i18n: IntlConfig;
   layout: ProLayoutProps & {
     pwa?: boolean;
     logo?: string;

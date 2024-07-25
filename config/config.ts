@@ -3,8 +3,8 @@ import defaultSettings from './defaultSettings';
 
 const appConfig: ConfigType = {
   i18n: {
-    locales: ['en', 'tr'],
-    defaultLocale: 'en',
+    locale: 'en-US',
+    defaultLocale: 'en-US',
   },
   layout: defaultSettings,
 };

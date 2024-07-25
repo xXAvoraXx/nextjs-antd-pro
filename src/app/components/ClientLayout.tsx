@@ -7,6 +7,7 @@ import config from '@@config/config';
 import { useAppStore } from '@/stores/app';
 import { useShallow } from 'zustand/react/shallow';
 import { omit } from 'lodash';
+import { SelectLang } from '@/providers/LocaleProvider/SelectLang';
 
 export const ClientLayout = (props: React.PropsWithChildren) => {
   const { children } = props;
@@ -19,6 +20,14 @@ export const ClientLayout = (props: React.PropsWithChildren) => {
     <ProLayout
       siderWidth={256}
       footerRender={() => <Footer />}
+      actionsRender={() => [
+        <SelectLang
+          key="SelectLang"
+          style={{
+            padding: 4,
+          }}
+        />,
+      ]}
       bgLayoutImgList={[
         {
           src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/D2LWSqNny4sAAAAAAAAAAAAAFl94AQBr',

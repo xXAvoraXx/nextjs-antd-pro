@@ -1,4 +1,4 @@
 export default {
   "app.copyright.produced":
-    "Ant Design Pro",
+    "Ant Design Pro TR",
 };

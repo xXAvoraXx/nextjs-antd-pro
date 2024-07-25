@@ -125,8 +125,8 @@ const WelcomePageContainer: React.FC = () => {
             }}
           >
             Welcome to Ant Design Pro. Ant Design Pro is a scaffold solution that integrates umi,
-            Ant Design, and ProComponents. It is dedicated to improving the experience of "users"
-            and "designers" in the process of designing and developing enterprise-level middle and
+            Ant Design, and ProComponents. It is dedicated to improving the experience of &ldquo;users&rdquo;
+            and &ldquo;designers&rdquo; in the process of designing and developing enterprise-level middle and
             back-office products by building the foundation of design features and basic components,
             improving typical templates/business components/supporting design resources.
           </Paragraph>

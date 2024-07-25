@@ -95,12 +95,12 @@ export const addLocale = (
   if (!name) {
     return;
   }
-  // 可以合并
+  // Mevcut dilin mesajlarını birleştirir
   const mergeMessages = localeInfo[name]?.messages
     ? Object.assign({}, localeInfo[name].messages, messages)
     : messages;
 
-  // 用户只是追加 messages 时，extraLocales 可选
+  // Kullanıcı sadece mesajları eklerken, extraLocales isteğe bağlıdır
   const {
     momentLocale = localeInfo[name]?.momentLocale,
     antd = localeInfo[name]?.antd,
@@ -112,7 +112,7 @@ export const addLocale = (
     momentLocale: momentLocale,
     antd,
   };
-  // 如果这是的 name 和当前的locale 相同需要重新设置一下，不然更新不了
+  // Eğer bu isim ve mevcut dil aynıysa, yeniden ayarlanması gerekiyor, aksi takdirde güncellenmez
   if (locale === getLocale()) {
     event.emit(LANG_CHANGE_EVENT.toString(), locale);
   }
@@ -143,77 +143,71 @@ const _createIntl = (locale: string) => {
  * @returns IntlShape
  */
 export const getIntl = (locale?: string, changeIntl?: boolean) => {
-  // 如果全局的 g_intl 存在，且不是 setIntl 调用
+  // Eğer global g_intl varsa ve changeIntl ve locale parametreleri belirtilmemişse
   if (g_intl && !changeIntl && !locale) {
     return g_intl;
   }
-  // 获取当前 locale
+  // Eğer locale belirtilmemişse, mevcut locale'i al
   if (!locale) locale = getLocale();
-  // 如果存在于 localeInfo 中
+  // Eğer localeInfo içinde varsa
   if (locale && localeInfo[locale]) {
     return _createIntl(locale);
   }
-  // 不存在需要一个报错提醒
+  // Eğer yoksa, bir uyarı mesajı göster
   warning(
     !locale || !!localeInfo[locale],
-    `The current popular language does not exist, please check the locales folder!`
+    `Mevcut dil bulunamadı, lütfen locales klasörünü kontrol edin!`
   );
-  // 使用 zh-CN
-  if (localeInfo["tr-TR"]) {
-    return _createIntl("tr-TR");
+  // en-US kullan
+  if (localeInfo["en-US"]) {
+    return _createIntl("en-US");
   }
 
-  // 如果还没有，返回一个空的
+  // Eğer hala yoksa, boş bir intl nesnesi döndür
   return createIntl({
-    locale: "tr-TR",
+    locale: "en-US",
     messages: {},
   });
 };
 
 /**
- * 切换全局的 intl 的设置
- * @param locale 语言的key
+ * Küresel intl ayarını değiştir
+ * @param locale dil anahtarı
  */
 export const setIntl = (locale: string) => {
   g_intl = getIntl(locale, true);
 };
 
 /**
- * 获取当前选择的语言
+ * Şu anda seçili olan dili alın
  * @returns string
  */
 export const getLocale = () => {
   const runtimeLocale = applyRuntimeLocalePlugin({});
-
-  // Runtime getLocale for user define
-  if (typeof runtimeLocale?.getLocale === "function") {
-    return runtimeLocale.getLocale();
+  // runtime getLocale for user define
+  if (typeof runtimeLocale?.getLocale === 'function') {
+   return runtimeLocale.getLocale();
   }
-
-  // İstemci tarafında çalışıyor mu kontrol et
-  if (typeof window !== "undefined") {
-    // Tarayıcı nesnelerine güvenli erişim
-    const useLocalStorage = true; // Bu değer uygulamanızın diğer kısımlarından alınabilir veya dinamik olabilir
-
-    const lang =
-      navigator.cookieEnabled && useLocalStorage
-        ? window.localStorage.getItem("NEXT_LOCALE")
-        : "";
-
-    const isNavigatorLanguageValid = typeof navigator.language === "string";
-    const browserLang = isNavigatorLanguageValid
-      ? navigator.language.split("-").join("-")
-      : "";
-
-    return lang || browserLang || "tr-TR";
+  // please clear localStorage if you change the baseSeparator config
+  // because changing will break the app
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined' && useLocalStorage) {
+    const lang = window.localStorage.getItem('NEXT_LOCALE');
+    if (lang) {
+      return lang;
+    }
   }
-
-  // İstemci tarafında değilse varsayılan bir dil döndür
-  return "tr-TR";
+  // support baseNavigator, default true
+  let browserLang;
+  const isNavigatorLanguageValid =
+    typeof navigator !== 'undefined' && typeof navigator.language === 'string';
+  browserLang = isNavigatorLanguageValid
+    ? navigator.language.split('-').join('-')
+    : '';
+  return browserLang || "en-US";
 };
 
 /**
- * 获取当前选择的方向
+ * Şu anda seçili olan yönü alın
  * @returns string
  */
 export const getDirection = () => {
@@ -227,12 +221,12 @@ export const getDirection = () => {
 };
 
 /**
- * 切换语言
- * @param lang 语言的 key
- * @param realReload 是否刷新页面，默认刷新
+ * Dil değiştir
+ * @param lang Dilin anahtarı
+ * @param realReload sayfanın yenilenip yenilenmeyeceği, varsayılan değer refresh
  * @returns string
  */
-export const setLocale = (lang: string, realReload: boolean = true) => {
+export const setLocale = (lang: string, realReload: boolean = false) => {
   //const { pluginManager } = useAppContext();
   //const runtimeLocale = pluginManagerapplyPlugins({
   //  key: 'locale',
@@ -255,7 +249,7 @@ export const setLocale = (lang: string, realReload: boolean = true) => {
         window.location.reload();
       } else {
         event.emit(LANG_CHANGE_EVENT.toString(), lang);
-        // chrome 不支持这个事件。所以人肉触发一下
+        // chrome bu olayı desteklemiyor. Bu yüzden manuel olarak tetikleyin
         if (window.dispatchEvent) {
           const event = new Event("languagechange");
           window.dispatchEvent(event);
