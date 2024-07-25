@@ -2,6 +2,7 @@
 const nextConfig = {
     transpilePackages: [
         '@ant-design/pro-components',
+        '@ant-design/pro-cli'
       ],
 };
 

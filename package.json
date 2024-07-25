@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "cross-env NODE_ENV=development next dev",
+    "start:dev": "cross-env NODE_ENV=development MOCK=none next dev",
+    "start:no-mock": "cross-env MOCK=none next dev",
+    "start:prod": "cross-env NODE_ENV=production next start",
     "lint": "next lint && npm run lint:js && npm run lint:prettier && npm run tsc",
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
@@ -38,12 +41,19 @@
     "react-intl": "^6.6.8"
   },
   "devDependencies": {
+    "@ant-design/pro-cli": "^3.3.0",
+    "@types/express": "^4.17.21",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cross-env": "^7.0.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
+    "express": "^4.18.2",
     "husky": "^7.0.4",
+    "lint-staged": "^10.5.4",
+    "mockjs": "^1.1.0",
+    "prettier": "^2.8.8",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
