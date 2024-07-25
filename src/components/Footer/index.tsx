@@ -18,6 +18,7 @@ const Footer: React.FC = () => {
       style={{
         background: 'none',
       }}
+      copyright={`${currentYear} ${defaultMessage}`}
       links={[
         {
           key: 'Ant Design Pro',
