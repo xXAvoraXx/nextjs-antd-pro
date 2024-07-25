@@ -4,9 +4,17 @@ import Footer from '@/components/Footer';
 import { ProLayout } from '@ant-design/pro-components';
 import React from 'react';
 import config from '@@config/config';
+import { useAppStore } from '@/stores/app';
+import { useShallow } from 'zustand/react/shallow';
+import { omit } from 'lodash';
 
 export const ClientLayout = (props: React.PropsWithChildren) => {
   const { children } = props;
+
+  const { fixedHeader, contentWidth } = useAppStore(useShallow((state) => state.layoutSettings));
+
+  const initialSettings = omit(config.layout, ['contentWidth', 'fixedHeader']);
+
   return (
     <ProLayout
       siderWidth={256}
@@ -32,7 +40,9 @@ export const ClientLayout = (props: React.PropsWithChildren) => {
         },
       ]}
       menuHeaderRender={undefined}
-      {...config.layout}
+      {...initialSettings}
+      fixedHeader={fixedHeader}
+      contentWidth={contentWidth}
     >
       {children}
     </ProLayout>
