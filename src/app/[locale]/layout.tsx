@@ -1,7 +1,7 @@
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import "./globals.css";
 import { LocaleProvider } from "@/providers/LocaleProvider";
-import { ClientLayout } from "./ClientLayout";
+import { ClientLayout } from "./components/ClientLayout";
 import config from "@@config/config";
 import { Metadata } from "next";
 
