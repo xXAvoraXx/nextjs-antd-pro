@@ -1,0 +1,36 @@
+{
+  "name": "antd-demo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.4.0",
+    "@ant-design/nextjs-registry": "^1.0.0",
+    "@ant-design/pro-components": "^2.7.14",
+    "@types/event-emitter": "^0.3.5",
+    "antd": "^5.19.3",
+    "antd-style": "^3.6.2",
+    "dayjs": "^1.11.12",
+    "event-emitter": "^0.3.5",
+    "next": "14.2.5",
+    "next-i18n-router": "^5.5.1",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-intl": "^6.6.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
